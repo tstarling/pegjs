@@ -1,5 +1,5 @@
 describe("compiler pass |astToStackVM|", function() {
-  var pass = PEG.compiler.passes.generate.astToStackVM;
+  var pass = PEG.compiler.passes.generate_old.astToStackVM;
 
   function bytecodeDetails(bytecode) {
     return {

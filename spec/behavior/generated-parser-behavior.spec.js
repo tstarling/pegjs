@@ -1150,6 +1150,69 @@ describe("generated parser behavior", function() {
 
             expect(parser).toParse("abcf", ["a", "b", "c", ["a", "b", "c"]]);
           });
+
+          it("can't access label variables from within a simple predicate", function() {
+            var parser = PEG.buildParser(
+              'start = a:"a" &(b:"b") "b" {return typeof b;}',
+              options
+            );
+
+            expect(parser).toParse('ab', 'undefined');
+          });
+
+          it("can't access label variables from a previous nested choice", function() {
+            var parser = PEG.buildParser(
+              'start = ("a"/b:"b") {return typeof b;}',
+              options
+            );
+
+            expect(parser).toParse('b', 'undefined');
+          });
+
+          it("can't access label variables from a previous nested text operator", function() {
+            var parser = PEG.buildParser(
+              'start = $(a:"a") {return typeof a;}',
+              options
+            );
+
+            expect(parser).toParse('a', 'undefined');
+          });
+
+          it("can't access label variables from a conditional subexpression", function() {
+            var parser = PEG.buildParser(
+              'start = (a:"a")? {return typeof a;}',
+              options
+            );
+
+            expect(parser).toParse('a', 'undefined');
+          });
+
+          it("can't access label variables from a star subexpression", function() {
+            var parser = PEG.buildParser(
+              'start = (a:"a")* {return typeof a;}',
+              options
+            );
+
+            expect(parser).toParse('a', 'undefined');
+          });
+
+          it("can't access label variables from a plus subexpression", function() {
+            var parser = PEG.buildParser(
+              'start = (a:"a")+ {return typeof a;}',
+              options
+            );
+
+            expect(parser).toParse('a', 'undefined');
+          });
+
+          it("a label variable is not overwritten by a later hidden one", function() {
+            var parser = PEG.buildParser(
+              'start = a:"a" (a:"b")? {return a;}',
+              options
+            );
+
+            expect(parser).toParse('ab', 'a');
+          });
         });
 
         describe("initializer variables & functions", function() {

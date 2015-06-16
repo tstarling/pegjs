@@ -14,24 +14,24 @@
       /* Queue */
 
       var Q = {
-            functions: [],
+        functions: [],
 
-            add: function(f) {
-              this.functions.push(f);
-            },
+        add: function(f) {
+          this.functions.push(f);
+        },
 
-            run: function() {
-              if (this.functions.length > 0) {
-                this.functions.shift()();
+        run: function() {
+          if (this.functions.length > 0) {
+            this.functions.shift()();
 
-                /*
-                 * We can't use |arguments.callee| here because |this| would get
-                 * messed-up in that case.
-                 */
-                setTimeout(function() { Q.run(); }, 0);
-              }
-            }
-          };
+            /*
+             * We can't use |arguments.callee| here because |this| would get
+             * messed-up in that case.
+             */
+            Q.run();
+          }
+        }
+      };
 
       /*
        * The benchmark itself is factored out into several functions (some of them
@@ -80,12 +80,12 @@
 
           input = callbacks.readFile(benchmark.id + "/" + test.file);
 
-          parseTime = 0;
+          t = process.hrtime();
           for (k = 0; k < runCount; k++) {
-            t = (new Date()).getTime();
             state.parser.parse(input);
-            parseTime += (new Date()).getTime() - t;
           }
+          t = process.hrtime(t);
+          parseTime = t[0]*1e3 + t[1]/1e6;
           averageParseTime = parseTime / runCount;
 
           callbacks.testFinish(benchmark, test, input.length, averageParseTime);

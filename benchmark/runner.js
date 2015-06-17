@@ -21,14 +21,8 @@
         },
 
         run: function() {
-          if (this.functions.length > 0) {
-            this.functions.shift()();
-
-            /*
-             * We can't use |arguments.callee| here because |this| would get
-             * messed-up in that case.
-             */
-            Q.run();
+          for (var i = 0; i < this.functions.length; i++) {
+            this.functions[i]();
           }
         }
       };

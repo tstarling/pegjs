@@ -168,7 +168,7 @@ describe("generated parser behavior", function() {
         it("caches rule match results", function() {
           var parser = PEG.buildParser([
                 '{ var n = 0; }',
-                'start = (a "b") / (a "c") { return n; }',
+                'start = (a "b") {return "b";} / (a "c") { return n; }',
                 'a = "a" { n++; }'
               ].join("\n"), options);
 

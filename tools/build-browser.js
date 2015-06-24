@@ -13,6 +13,7 @@ var modules = [
   'compiler/opcodes',
   'compiler/javascript',
   'compiler/passes/ast-to-stackvm',
+  'compiler/passes/ast-to-regalloc-js',
   'compiler/passes/stackvm-to-javascript',
   'compiler/passes/remove-proxy-rules',
   'compiler/passes/report-left-recursion',
@@ -22,7 +23,8 @@ var modules = [
   'peg'];
 
 var runtimeModules = [
-  'runtime/parser-internal',
+  'runtime/common-helpers',
+  'runtime/regalloc-helpers',
   'runtime/tracer',
   'runtime/wrapper'];
 

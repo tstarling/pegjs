@@ -3,7 +3,7 @@
 "use strict";
 
 describe("compiler pass |astToStackVM|", function() {
-  var pass = PEG.compiler.passes.generate_old.astToStackVM;
+  var pass = PEG.compiler.passes.generate_stackvm.astToStackVM;
 
   function bytecodeDetails(bytecode) {
     return {

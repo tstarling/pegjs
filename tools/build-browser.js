@@ -64,6 +64,6 @@ for (i = 0; i < runtimeModules.length; i++) {
 }
 
 var code = readSource('runtime/browser-main')
-  .replace('/*$MODULES*/', moduleDefs.join('\n'));
+  .replace('/*$MODULES*/', moduleDefs.join('\n').replace(/\$/g, '$$$$'));
 
 process.stdout.write(code);

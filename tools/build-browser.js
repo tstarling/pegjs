@@ -57,9 +57,9 @@ for (i = 0; i < modules.length; i++) {
 for (i = 0; i < runtimeModules.length; i++) {
   var moduleSource = readSource(runtimeModules[i]);
   moduleDefs.push(
-    '  modules.define(' + JSON.stringify(runtimeModules[i]) + ', function(module, require) {',
-    '    module.exports.code = ' + JSON.stringify(moduleSource),
-    '  });',
+    '  files.define(' + JSON.stringify(runtimeModules[i] + '.js') + ', ',
+    '    ' + JSON.stringify(moduleSource),
+    '  );',
   '');
 }
 

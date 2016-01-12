@@ -61,7 +61,7 @@ browser:
 	echo ' * Licensed under the MIT license.'                                          >> $(BROWSER_FILE_DEV)
 	echo ' */'                                                                         >> $(BROWSER_FILE_DEV)
 
-	$(BROWSERIFY) --standalone PEG $(MAIN_FILE) >> $(BROWSER_FILE_DEV)
+	$(BROWSERIFY) --standalone PEG $(MAIN_FILE) --transform brfs >> $(BROWSER_FILE_DEV)
 
 	$(UGLIFYJS)                 \
 	  --mangle                  \

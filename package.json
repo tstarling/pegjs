@@ -54,7 +54,8 @@
     "url":  "http://github.com/pegjs/pegjs.git"
   },
   "devDependencies": {
-    "browserify":   "11.2.0",
+    "brfs": "^1.4.2",
+    "browserify": "^13.0.0",
     "jasmine-node": "= 1.11.0",
     "uglify-js":    "= 2.4.7",
     "jshint":       "= 2.3.0"

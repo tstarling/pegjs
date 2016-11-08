@@ -15,6 +15,8 @@ NODE_MODULES_BIN_DIR = $(NODE_MODULES_DIR)/.bin
 
 # ===== Files =====
 
+MAIN_FILE = $(LIB_DIR)/peg.js
+
 PARSER_SRC_FILE = $(SRC_DIR)/parser.pegjs
 PARSER_OUT_FILE = $(LIB_DIR)/parser.js
 
@@ -25,8 +27,8 @@ VERSION_FILE = VERSION
 
 # ===== Executables =====
 
-NODE          = node
 JSHINT        = $(NODE_MODULES_BIN_DIR)/jshint
+BROWSERIFY    = $(NODE_MODULES_BIN_DIR)/browserify
 UGLIFYJS      = $(NODE_MODULES_BIN_DIR)/uglifyjs
 JASMINE_NODE  = $(NODE_MODULES_BIN_DIR)/jasmine-node
 PEGJS         = $(BIN_DIR)/pegjs
@@ -48,7 +50,18 @@ browser:
 	rm -f $(BROWSER_FILE_DEV)
 	rm -f $(BROWSER_FILE_MIN)
 
-	$(NODE) tools/build-browser.js > $(BROWSER_FILE_DEV)
+	# The following code is inspired by CoffeeScript's Cakefile.
+
+	echo '/*'                                                                          >> $(BROWSER_FILE_DEV)
+	echo " * PEG.js $(PEGJS_VERSION)"                                                  >> $(BROWSER_FILE_DEV)
+	echo ' *'                                                                          >> $(BROWSER_FILE_DEV)
+	echo ' * http://pegjs.org/'                                                        >> $(BROWSER_FILE_DEV)
+	echo ' *'                                                                          >> $(BROWSER_FILE_DEV)
+	echo ' * Copyright (c) 2010-2015 David Majda'                                      >> $(BROWSER_FILE_DEV)
+	echo ' * Licensed under the MIT license.'                                          >> $(BROWSER_FILE_DEV)
+	echo ' */'                                                                         >> $(BROWSER_FILE_DEV)
+
+	$(BROWSERIFY) --standalone PEG $(MAIN_FILE) --transform brfs >> $(BROWSER_FILE_DEV)
 
 	$(UGLIFYJS)                 \
 	  --mangle                  \
